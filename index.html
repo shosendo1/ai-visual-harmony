@@ -1,387 +1,253 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #a7c598; -webkit-text-stroke: #a7c598}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s4 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s5 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s6 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s7 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s8 {font-kerning: none; color: #71c083; background-color: #171818; -webkit-text-stroke: 0px #71c083}
-    span.s9 {font-kerning: none; color: #6d7378; background-color: #171818; -webkit-text-stroke: 0px #6d7378}
-    span.s10 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-    span.s11 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s12 {font-kerning: none}
-    span.s13 {font-kerning: none; color: #f67c30; background-color: #171818; -webkit-text-stroke: 0px #f67c30}
-    span.s14 {font-kerning: none; color: #36c0a0; background-color: #171818; -webkit-text-stroke: 0px #36c0a0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIビジュアルハーモニー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .wood-panel { background-color: #F3F2F0; } /* 和紙のような少し温かみのある白 */
+        .accent-color { background-color: #FAE3D9; } /* 木目のような淡いベージュ */
+        .border-accent { border-color: #D1C7B7; } /* 曖昧な境界線 */
+        .btn-primary {
+            background-color: #3B82F6; /* 青色 */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover { background-color: #2563EB; } /* 濃い青色 */
+        .btn-primary:disabled {
+            background-color: #93C5FD; /* 薄い青色 */
+            cursor: not-allowed;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3B82F6; /* 青色 */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .step-icon {
+            background-color: #3B82F6;
+        }
+    </style>
 </head>
-<body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"ja"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">AIビジュアルハーモニー</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;display=swap"</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s8">'Noto Sans JP'</span><span class="s7">,</span><span class="s1"> </span><span class="s5">sans-serif</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #F3F2F0</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 和紙のような少し温かみのある白 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.wood-panel</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #EAE3D9</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 木目のような薄いベージュ */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s10">1px</span><span class="s1"> </span><span class="s5">solid</span><span class="s1"> #D1C7B8</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 少し濃い境界線 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.btn-primary</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #3B82F6</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 青色 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s7">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s4"> </span><span class="s1">background-color</span><span class="s4"> </span><span class="s10">0.3s</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.btn-primary:hover</span><span class="s7">,</span><span class="s4"> </span><span class="s1">.btn-primary:focus</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #2563EB</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 濃い青色 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.btn-primary:disabled</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #93C5FD</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/*薄い青色 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s5">not-allowed</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.loader</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s10">4px</span><span class="s1"> </span><span class="s5">solid</span><span class="s1"> #f3f3f3</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-top:</span><span class="s1"> </span><span class="s10">4px</span><span class="s1"> </span><span class="s5">solid</span><span class="s1"> #3B82F6</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 青色 */</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s4"> </span><span class="s10">50%</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s10">40px</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s10">40px</span><span class="s7">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">animation:</span><span class="s4"> </span><span class="s1">spin</span><span class="s4"> </span><span class="s10">1s</span><span class="s4"> </span><span class="s1">linear</span><span class="s4"> </span><span class="s1">infinite</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">@keyframes</span><span class="s1"> </span><span class="s5">spin</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">0%</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s2">transform:</span><span class="s1"> </span><span class="s5">rotate(</span><span class="s10">0deg</span><span class="s5">)</span><span class="s7">;</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s10">100%</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s2">transform:</span><span class="s1"> </span><span class="s5">rotate(</span><span class="s10">360deg</span><span class="s5">)</span><span class="s7">;</span><span class="s1"> </span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.dashed-border</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-style:</span><span class="s1"> </span><span class="s5">dashed</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.brightness-btn</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s5">transparent</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #3B82F6</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 青色 */</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s4"> </span><span class="s10">1px</span><span class="s4"> </span><span class="s1">solid</span><span class="s4"> </span><span class="s1">transparent</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.brightness-btn.active</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #fff</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #1E40AF</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 濃い青色 */</span></p>
-<p class="p5"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">1px</span><span class="s4"> </span><span class="s1">3px</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s5">rgb(</span><span class="s1">0</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s7">/</span><span class="s4"> </span><span class="s1">0.1</span><span class="s5">)</span><span class="s7">,</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">1px</span><span class="s4"> </span><span class="s1">2px</span><span class="s4"> </span><span class="s1">-1px</span><span class="s4"> </span><span class="s5">rgb(</span><span class="s1">0</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s1">0</span><span class="s4"> </span><span class="s7">/</span><span class="s4"> </span><span class="s1">0.1</span><span class="s5">)</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-color:</span><span class="s1"> #BFDBFE</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 薄い青色の境界線 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.brightness-btn:hover:not</span><span class="s4">(</span><span class="s1">.active</span><span class="s4">) </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #DBEAFE</span><span class="s7">;</span><span class="s1"> </span><span class="s9">/* 青みがかった背景 */</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s3">&lt;</span><span class="s6">body</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-gray-800"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"container mx-auto p-4 md:p-8 max-w-4xl"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">header</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mb-8"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl md:text-4xl font-bold text-[#4a3f35]"</span><span class="s3">&gt;</span><span class="s4">AIビジュアルハーモニー</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2 text-gray-600"</span><span class="s3">&gt;</span><span class="s1">あなたの作品はお客様のもともで映えていますか？ 確かめてみましょう</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">header</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">main</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 md:p-8 space-y-8"</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Step 1: Upload Image --&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"step"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold mb-4 flex items-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-[#3B82F6] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3"</span><span class="s3">&gt;</span><span class="s4">1</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>画像をアップロード</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-sm text-gray-600 mb-4"</span><span class="s3">&gt;</span><span class="s1">背景が除去された（透明な）PNG画像を推奨します。</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"image-upload-area"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"wood-panel rounded-lg p-6 text-center cursor-pointer border-2 dashed-border border-gray-400 hover:border-gray-600 transition"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">input</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"file"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"kakejiku-upload"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden"</span><span class="s4"> </span><span class="s2">accept</span><span class="s3">=</span><span class="s1">"image/png, image/jpeg, image/webp"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s5">"upload-prompt"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">svg</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mx-auto h-12 w-12 text-gray-500"</span><span class="s4"> </span><span class="s2">stroke</span><span class="s3">=</span><span class="s1">"currentColor"</span><span class="s4"> </span><span class="s2">fill</span><span class="s3">=</span><span class="s1">"none"</span><span class="s4"> </span><span class="s2">viewBox</span><span class="s3">=</span><span class="s1">"0 0 48 48"</span><span class="s4"> </span><span class="s2">aria-hidden</span><span class="s3">=</span><span class="s1">"true"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                            </span></span><span class="s3">&lt;</span><span class="s6">path</span><span class="s4"> </span><span class="s2">d</span><span class="s3">=</span><span class="s1">"M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8"</span><span class="s4"> </span><span class="s2">stroke-width</span><span class="s3">=</span><span class="s1">"2"</span><span class="s4"> </span><span class="s2">stroke-linecap</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s2">stroke-linejoin</span><span class="s3">=</span><span class="s1">"round"</span><span class="s4"> </span><span class="s3">/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;/</span><span class="s6">svg</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-2 text-gray-600"</span><span class="s3">&gt;</span><span class="s1">ここをクリックするか、画像をドラッグ＆ドロップ</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">img</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"image-preview"</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">""</span><span class="s4"> </span><span class="s2">alt</span><span class="s3">=</span><span class="s1">"アップロードされた画像"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden max-h-60 mx-auto rounded-md shadow-md"</span><span class="s3">/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Step 2: Input Prompt &amp; Settings --&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"step"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold mb-4 flex items-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-[#3B82F6] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3"</span><span class="s3">&gt;</span><span class="s4">2</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>背景を言葉で指示</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">textarea</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"prompt-input"</span><span class="s4"> </span><span class="s2">rows</span><span class="s3">=</span><span class="s1">"4"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"</span><span class="s4"> </span><span class="s2">placeholder</span><span class="s3">=</span><span class="s1">"例：モダンな和室の床の間、桜が満開の庭が見える縁側、サイバーパンクな都市の壁"</span><span class="s3">&gt;&lt;/</span><span class="s6">textarea</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-4"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">label</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"block text-sm font-medium text-gray-700 mb-2"</span><span class="s3">&gt;</span><span class="s4">明るさの調整</span><span class="s3">&lt;/</span><span class="s6">label</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex space-x-2 rounded-lg p-1 bg-[#EAE3D9]"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"brightness-controls"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">data-brightness</span><span class="s3">=</span><span class="s1">"dark"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"brightness-btn flex-1 py-2 px-4 text-sm font-semibold rounded-md transition"</span><span class="s3">&gt;</span><span class="s4">暗くする</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">data-brightness</span><span class="s3">=</span><span class="s1">"normal"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"brightness-btn flex-1 py-2 px-4 text-sm font-semibold rounded-md transition active"</span><span class="s3">&gt;</span><span class="s4">標準</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">data-brightness</span><span class="s3">=</span><span class="s1">"light"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"brightness-btn flex-1 py-2 px-4 text-sm font-semibold rounded-md transition"</span><span class="s3">&gt;</span><span class="s4">明るくする</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Step 3: Generate Button --&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"generate-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"btn-primary font-bold py-3 px-8 rounded-full text-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/50 transition transform hover:-translate-y-1"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>画像を生成する</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">&lt;!-- Step 4: Result Display --&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"step"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-xl font-bold mb-4 flex items-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-[#3B82F6] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3"</span><span class="s3">&gt;</span><span class="s4">3</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>生成結果</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"result-area"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"wood-panel rounded-lg p-4 min-h-[300px] flex items-center justify-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"loading-spinner"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden text-center"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"loader mx-auto"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mt-4 text-gray-600"</span><span class="s3">&gt;</span><span class="s1">画像を生成中です...しばらくお待ちください。</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                     </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s5">"result-placeholder"</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-gray-500"</span><span class="s3">&gt;</span><span class="s1">ここに生成された画像が表示されます。</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">img</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"result-image"</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">""</span><span class="s4"> </span><span class="s2">alt</span><span class="s3">=</span><span class="s1">"生成された画像"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden w-full h-auto rounded-md shadow-lg"</span><span class="s3">/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-center mt-4"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"download-btn"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden btn-primary font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/50 transition"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>画像を保存する</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                 </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"error-message"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hidden mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"</span><span class="s4"> </span><span class="s2">role</span><span class="s3">=</span><span class="s1">"alert"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">strong</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"font-bold"</span><span class="s3">&gt;</span><span class="s1">エラー:</span><span class="s3">&lt;/</span><span class="s6">strong</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"block sm:inline"</span><span class="s3">&gt;</span><span class="s1">画像の生成に失敗しました。時間をおいてもう一度お試しください。</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">main</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">footer</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mt-8 text-sm text-gray-500"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s3">&gt;</span><span class="s1">&amp;copy; 2025 京都表具協同組合 <span class="Apple-converted-space">  </span>All rights reserved.</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">footer</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> uploadArea </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'image-upload-area'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> kakejikuUpload </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'kakejiku-upload'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> uploadPrompt </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'upload-prompt'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> imagePreview </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'image-preview'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> promptInput </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'prompt-input'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> generateBtn </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'generate-btn'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> resultArea </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'result-area'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> loadingSpinner </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'loading-spinner'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> resultPlaceholder </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'result-placeholder'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> resultImage </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'result-image'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> errorMessage </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'error-message'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> brightnessControls </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'brightness-controls'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">const</span><span class="s1"> downloadBtn </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">getElementById</span><span class="s7">(</span><span class="s8">'download-btn'</span><span class="s7">);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">let</span><span class="s1"> uploadedImageBase64 </span><span class="s7">=</span><span class="s1"> </span><span class="s11">null</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">let</span><span class="s1"> uploadedImageType </span><span class="s7">=</span><span class="s1"> </span><span class="s11">null</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">let</span><span class="s1"> currentBrightness </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'normal'</span><span class="s7">;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Image Upload Logic ---</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>uploadArea</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'click'</span><span class="s7">,</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> kakejikuUpload</span><span class="s7">.</span><span class="s1">click</span><span class="s7">());</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>kakejikuUpload</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'change'</span><span class="s7">,</span><span class="s1"> handleFileSelect</span><span class="s7">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s7">[</span><span class="s1">'dragenter'</span><span class="s7">,</span><span class="s4"> </span><span class="s1">'dragover'</span><span class="s7">,</span><span class="s4"> </span><span class="s1">'dragleave'</span><span class="s7">,</span><span class="s4"> </span><span class="s1">'drop'</span><span class="s7">].</span><span class="s4">forEach</span><span class="s7">(</span><span class="s4">eventName </span><span class="s7">=&gt;</span><span class="s4"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>uploadArea</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s1">eventName</span><span class="s7">,</span><span class="s1"> preventDefaults</span><span class="s7">,</span><span class="s1"> </span><span class="s11">false</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">[</span><span class="s8">'dragenter'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'dragover'</span><span class="s7">].</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">eventName </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>uploadArea</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s1">eventName</span><span class="s7">,</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> uploadArea</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'bg-gray-200'</span><span class="s7">),</span><span class="s1"> </span><span class="s11">false</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">[</span><span class="s8">'dragleave'</span><span class="s7">,</span><span class="s1"> </span><span class="s8">'drop'</span><span class="s7">].</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">eventName </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>uploadArea</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s1">eventName</span><span class="s7">,</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> uploadArea</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'bg-gray-200'</span><span class="s7">),</span><span class="s1"> </span><span class="s11">false</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>uploadArea</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'drop'</span><span class="s7">,</span><span class="s1"> handleDrop</span><span class="s7">,</span><span class="s1"> </span><span class="s11">false</span><span class="s7">);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">function</span><span class="s1"> preventDefaults</span><span class="s7">(</span><span class="s1">e</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>e</span><span class="s7">.</span><span class="s1">preventDefault</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>e</span><span class="s7">.</span><span class="s1">stopPropagation</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">function</span><span class="s1"> handleDrop</span><span class="s7">(</span><span class="s1">e</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">let</span><span class="s1"> dt </span><span class="s7">=</span><span class="s1"> e</span><span class="s7">.</span><span class="s1">dataTransfer</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">let</span><span class="s1"> files </span><span class="s7">=</span><span class="s1"> dt</span><span class="s7">.</span><span class="s1">files</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">files</span><span class="s7">.</span><span class="s1">length </span><span class="s7">&gt;</span><span class="s1"> </span><span class="s13">0</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>kakejikuUpload</span><span class="s7">.</span><span class="s1">files </span><span class="s7">=</span><span class="s1"> files</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>handleFileSelect</span><span class="s7">({</span><span class="s1"> target</span><span class="s7">:</span><span class="s1"> kakejikuUpload </span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">function</span><span class="s1"> handleFileSelect</span><span class="s7">(</span><span class="s1">event</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> file </span><span class="s7">=</span><span class="s1"> event</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">files</span><span class="s7">[</span><span class="s13">0</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">file </span><span class="s7">&amp;&amp;</span><span class="s1"> file</span><span class="s7">.</span><span class="s1">type</span><span class="s7">.</span><span class="s1">startsWith</span><span class="s7">(</span><span class="s8">'image/'</span><span class="s7">))</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> reader </span><span class="s7">=</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s14">FileReader</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>reader</span><span class="s7">.</span><span class="s1">onload </span><span class="s7">=</span><span class="s1"> </span><span class="s7">(</span><span class="s1">e</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>uploadedImageBase64 </span><span class="s7">=</span><span class="s1"> e</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">result</span><span class="s7">.</span><span class="s1">split</span><span class="s7">(</span><span class="s8">','</span><span class="s7">)[</span><span class="s13">1</span><span class="s7">];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>uploadedImageType </span><span class="s7">=</span><span class="s1"> file</span><span class="s7">.</span><span class="s1">type</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>imagePreview</span><span class="s7">.</span><span class="s1">src </span><span class="s7">=</span><span class="s1"> e</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">result</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>imagePreview</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>uploadPrompt</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">};</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>reader</span><span class="s7">.</span><span class="s1">readAsDataURL</span><span class="s7">(</span><span class="s1">file</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Brightness Control Logic ---</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>brightnessControls</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'click'</span><span class="s7">,</span><span class="s1"> </span><span class="s7">(</span><span class="s1">e</span><span class="s7">)</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">e</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">contains</span><span class="s7">(</span><span class="s8">'brightness-btn'</span><span class="s7">))</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>brightnessControls</span><span class="s7">.</span><span class="s1">querySelectorAll</span><span class="s7">(</span><span class="s8">'.brightness-btn'</span><span class="s7">).</span><span class="s1">forEach</span><span class="s7">(</span><span class="s1">btn </span><span class="s7">=&gt;</span><span class="s1"> btn</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'active'</span><span class="s7">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>e</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'active'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>currentBrightness </span><span class="s7">=</span><span class="s1"> e</span><span class="s7">.</span><span class="s1">target</span><span class="s7">.</span><span class="s1">dataset</span><span class="s7">.</span><span class="s1">brightness</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Download Logic ---</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>downloadBtn</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'click'</span><span class="s7">,</span><span class="s1"> </span><span class="s7">()</span><span class="s1"> </span><span class="s7">=&gt;</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">resultImage</span><span class="s7">.</span><span class="s1">src </span><span class="s7">&amp;&amp;</span><span class="s1"> </span><span class="s7">!</span><span class="s1">resultImage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">contains</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">))</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> link </span><span class="s7">=</span><span class="s1"> document</span><span class="s7">.</span><span class="s1">createElement</span><span class="s7">(</span><span class="s8">'a'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>link</span><span class="s7">.</span><span class="s1">href </span><span class="s7">=</span><span class="s1"> resultImage</span><span class="s7">.</span><span class="s1">src</span><span class="s7">;</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>link</span><span class="s7">.</span><span class="s4">download </span><span class="s7">=</span><span class="s4"> </span><span class="s1">'ai-visual-harmony-generated.png'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>document</span><span class="s7">.</span><span class="s1">body</span><span class="s7">.</span><span class="s1">appendChild</span><span class="s7">(</span><span class="s1">link</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>link</span><span class="s7">.</span><span class="s1">click</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>document</span><span class="s7">.</span><span class="s1">body</span><span class="s7">.</span><span class="s1">removeChild</span><span class="s7">(</span><span class="s1">link</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">});</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Generation Logic ---</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>generateBtn</span><span class="s7">.</span><span class="s1">addEventListener</span><span class="s7">(</span><span class="s8">'click'</span><span class="s7">,</span><span class="s1"> generateImage</span><span class="s7">);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">async</span><span class="s1"> </span><span class="s11">function</span><span class="s1"> generateImage</span><span class="s7">()</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(!</span><span class="s1">uploadedImageBase64</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>alert</span><span class="s7">(</span><span class="s8">'まず画像をアップロードしてください。'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">return</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(!</span><span class="s1">promptInput</span><span class="s7">.</span><span class="s1">value</span><span class="s7">.</span><span class="s1">trim</span><span class="s7">())</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>alert</span><span class="s7">(</span><span class="s8">'背景の指示を入力してください。'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">return</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>setLoadingState</span><span class="s7">(</span><span class="s11">true</span><span class="s7">);</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> userPrompt </span><span class="s7">=</span><span class="s1"> promptInput</span><span class="s7">.</span><span class="s1">value</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">let</span><span class="s1"> brightnessPrompt </span><span class="s7">=</span><span class="s1"> </span><span class="s8">''</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">switch</span><span class="s1"> </span><span class="s7">(</span><span class="s1">currentBrightness</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">case</span><span class="s1"> </span><span class="s8">'dark'</span><span class="s7">:</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>brightnessPrompt </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'全体的に落ち着いた暗めの雰囲気で、陰影を強調してください。'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">break</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">case</span><span class="s1"> </span><span class="s8">'light'</span><span class="s7">:</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>brightnessPrompt </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'全体的に明るく、光が差し込むような爽やかな雰囲気で。'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">break</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">case</span><span class="s1"> </span><span class="s8">'normal'</span><span class="s7">:</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">default</span><span class="s7">:</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>brightnessPrompt </span><span class="s7">=</span><span class="s1"> </span><span class="s8">''</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">break</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s4"> modelPrompt </span><span class="s7">=</span><span class="s4"> </span><span class="s1">`以下の画像を、説明文に合うように自然に背景と合成してください。アップロードされた画像が主役になるように、美しく飾られている様子を生成してください。 </span><span class="s7">${</span><span class="s4">brightnessPrompt</span><span class="s7">}</span><span class="s1">\n\n説明文: </span><span class="s7">${</span><span class="s4">userPrompt</span><span class="s7">}</span><span class="s1">`</span><span class="s7">;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> payload </span><span class="s7">=</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>contents</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>parts</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s7">{</span><span class="s1"> text</span><span class="s7">:</span><span class="s1"> modelPrompt </span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>inlineData</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>mimeType</span><span class="s7">:</span><span class="s1"> uploadedImageType</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>data</span><span class="s7">:</span><span class="s1"> uploadedImageBase64</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>generationConfig</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>responseModalities</span><span class="s7">:</span><span class="s1"> </span><span class="s7">[</span><span class="s8">'IMAGE'</span><span class="s7">]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">};</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s1"> apiKey </span><span class="s7">=</span><span class="s1"> </span><span class="s8">""</span><span class="s7">;</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s11">const</span><span class="s4"> apiUrl </span><span class="s7">=</span><span class="s4"> </span><span class="s1">`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=</span><span class="s7">${</span><span class="s4">apiKey</span><span class="s7">}</span><span class="s1">`</span><span class="s7">;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">try</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Exponential backoff retry logic</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">let</span><span class="s1"> response</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">let</span><span class="s1"> retries </span><span class="s7">=</span><span class="s1"> </span><span class="s13">3</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">let</span><span class="s1"> delay </span><span class="s7">=</span><span class="s1"> </span><span class="s13">1000</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">for</span><span class="s1"> </span><span class="s7">(</span><span class="s11">let</span><span class="s1"> i </span><span class="s7">=</span><span class="s1"> </span><span class="s13">0</span><span class="s7">;</span><span class="s1"> i </span><span class="s7">&lt;</span><span class="s1"> retries</span><span class="s7">;</span><span class="s1"> i</span><span class="s7">++)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>response </span><span class="s7">=</span><span class="s1"> </span><span class="s11">await</span><span class="s1"> fetch</span><span class="s7">(</span><span class="s1">apiUrl</span><span class="s7">,</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>method</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'POST'</span><span class="s7">,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>headers</span><span class="s7">:</span><span class="s1"> </span><span class="s7">{</span><span class="s1"> </span><span class="s8">'Content-Type'</span><span class="s7">:</span><span class="s1"> </span><span class="s8">'application/json'</span><span class="s1"> </span><span class="s7">},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>body</span><span class="s7">:</span><span class="s1"> </span><span class="s14">JSON</span><span class="s7">.</span><span class="s1">stringify</span><span class="s7">(</span><span class="s1">payload</span><span class="s7">)</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">response</span><span class="s7">.</span><span class="s1">ok</span><span class="s7">)</span><span class="s1"> </span><span class="s11">break</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(!</span><span class="s1">response</span><span class="s7">.</span><span class="s1">ok </span><span class="s7">&amp;&amp;</span><span class="s1"> response</span><span class="s7">.</span><span class="s1">status </span><span class="s7">&gt;=</span><span class="s1"> </span><span class="s13">500</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s11">await</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s14">Promise</span><span class="s7">(</span><span class="s1">res </span><span class="s7">=&gt;</span><span class="s1"> setTimeout</span><span class="s7">(</span><span class="s1">res</span><span class="s7">,</span><span class="s1"> delay</span><span class="s7">));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>delay </span><span class="s7">*=</span><span class="s1"> </span><span class="s13">2</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">}</span><span class="s1"> </span><span class="s11">else</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s1">// Don't retry for client-side errors (4xx)</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s11">break</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(!</span><span class="s1">response</span><span class="s7">.</span><span class="s1">ok</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">throw</span><span class="s1"> </span><span class="s11">new</span><span class="s1"> </span><span class="s14">Error</span><span class="s7">(</span><span class="s8">`API request failed with status </span><span class="s7">${</span><span class="s1">response</span><span class="s7">.</span><span class="s1">status</span><span class="s7">}</span><span class="s8">`</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> result </span><span class="s7">=</span><span class="s1"> </span><span class="s11">await</span><span class="s1"> response</span><span class="s7">.</span><span class="s1">json</span><span class="s7">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">const</span><span class="s1"> base64Data </span><span class="s7">=</span><span class="s1"> result</span><span class="s7">?.</span><span class="s1">candidates</span><span class="s7">?.[</span><span class="s13">0</span><span class="s7">]?.</span><span class="s1">content</span><span class="s7">?.</span><span class="s1">parts</span><span class="s7">?.</span><span class="s1">find</span><span class="s7">(</span><span class="s1">p </span><span class="s7">=&gt;</span><span class="s1"> p</span><span class="s7">.</span><span class="s1">inlineData</span><span class="s7">)?.</span><span class="s1">inlineData</span><span class="s7">?.</span><span class="s1">data</span><span class="s7">;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">base64Data</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s11">const</span><span class="s1"> imageUrl </span><span class="s7">=</span><span class="s1"> </span><span class="s8">`data:image/png;base64,</span><span class="s7">${</span><span class="s1">base64Data</span><span class="s7">}</span><span class="s8">`</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>resultImage</span><span class="s7">.</span><span class="s1">src </span><span class="s7">=</span><span class="s1"> imageUrl</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>resultImage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>downloadBtn</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>resultPlaceholder</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>errorMessage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span><span class="s1"> </span><span class="s11">else</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>downloadBtn</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s11">throw</span><span class="s4"> </span><span class="s11">new</span><span class="s4"> </span><span class="s14">Error</span><span class="s7">(</span><span class="s1">'No image data found in response.'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span><span class="s1"> </span><span class="s11">catch</span><span class="s1"> </span><span class="s7">(</span><span class="s1">error</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>console</span><span class="s7">.</span><span class="s1">error</span><span class="s7">(</span><span class="s8">'Error generating image:'</span><span class="s7">,</span><span class="s1"> error</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>errorMessage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>resultImage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>downloadBtn</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>resultPlaceholder</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span><span class="s1"> </span><span class="s11">finally</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>setLoadingState</span><span class="s7">(</span><span class="s11">false</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s11">function</span><span class="s1"> setLoadingState</span><span class="s7">(</span><span class="s1">isLoading</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>generateBtn</span><span class="s7">.</span><span class="s1">disabled </span><span class="s7">=</span><span class="s1"> isLoading</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s11">if</span><span class="s1"> </span><span class="s7">(</span><span class="s1">isLoading</span><span class="s7">)</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>generateBtn</span><span class="s7">.</span><span class="s4">innerHTML </span><span class="s7">=</span><span class="s4"> </span><span class="s1">'&lt;span class="flex items-center justify-center"&gt;生成中...&lt;/span&gt;'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>loadingSpinner</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">remove</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>resultPlaceholder</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>resultImage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>errorMessage</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>downloadBtn</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span><span class="s1"> </span><span class="s11">else</span><span class="s1"> </span><span class="s7">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>generateBtn</span><span class="s7">.</span><span class="s1">textContent </span><span class="s7">=</span><span class="s1"> </span><span class="s8">'画像を生成する'</span><span class="s7">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>loadingSpinner</span><span class="s7">.</span><span class="s1">classList</span><span class="s7">.</span><span class="s1">add</span><span class="s7">(</span><span class="s8">'hidden'</span><span class="s7">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p6"><span class="s12"></span><br></p>
-<p class="p6"><span class="s12"></span><br></p>
+<body class="text-gray-800">
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-700">AIビジュアルハーモニー</h1>
+            <p class="mt-2 text-gray-600">あなたの作品はお客様のもとで映えていますか？ 確かめてみましょう</p>
+        </header>
+
+        <main class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 md:p-8 space-y-8">
+            <!-- Step 1: Upload Image -->
+            <div id="step1" class="flex items-start space-x-4">
+                <div class="step-icon text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-700">掛け軸画像をアップロード</h2>
+                    <p class="text-sm text-gray-500 mb-4">背景を合成したい掛け軸の画像（背景透明PNG推奨）を選択してください。</p>
+                    <div id="dropzone" class="border-2 border-dashed border-accent rounded-lg p-8 text-center cursor-pointer hover:bg-gray-50 transition">
+                        <input type="file" id="imageUpload" class="hidden" accept="image/png, image/jpeg">
+                        <p id="dropzone-text" class="text-gray-500">クリックしてファイルを選択<br>またはドラッグ＆ドロップ</p>
+                        <img id="preview" class="hidden max-h-40 mx-auto mt-4 rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Input Prompt -->
+            <div id="step2" class="flex items-start space-x-4 opacity-50 pointer-events-none">
+                <div class="step-icon text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-700">背景を言葉で指示</h2>
+                    <p class="text-sm text-gray-500 mb-4">どのような背景と合成したいか、具体的に入力してください。</p>
+                    <textarea id="prompt" class="w-full p-3 border border-accent rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition" rows="3" placeholder="例：モダンな和室の床の間、桜が満開の縁側から見える庭"></textarea>
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-600 mb-2">明るさの調整:</p>
+                        <div class="flex space-x-2">
+                             <button data-brightness="dark" class="brightness-btn flex-1 p-2 text-sm border rounded-lg transition">暗くする</button>
+                             <button data-brightness="normal" class="brightness-btn flex-1 p-2 text-sm border rounded-lg transition bg-blue-100 border-blue-400 text-blue-700 font-semibold">標準</button>
+                             <button data-brightness="light" class="brightness-btn flex-1 p-2 text-sm border rounded-lg transition">明るくする</button>
+                        </div>
+                    </div>
+                    <button id="generateBtn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg mt-6 transition transform hover:scale-105" disabled>画像を生成する</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Result -->
+            <div id="step3" class="flex items-start space-x-4 hidden">
+                <div class="step-icon text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-700">生成結果</h2>
+                    <div id="result-container" class="mt-4 min-h-[200px] wood-panel rounded-lg flex items-center justify-center p-4">
+                        <div id="loading" class="text-center hidden">
+                            <div class="loader mx-auto"></div>
+                            <p class="mt-4 text-gray-600">画像を生成中です...<br>しばらくお待ちください。</p>
+                        </div>
+                        <img id="resultImage" class="hidden max-w-full max-h-96 rounded-md">
+                        <p id="error-message" class="text-red-500 hidden"></p>
+                    </div>
+                     <button id="saveBtn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg mt-6 transition transform hover:scale-105 hidden">画像を保存する</button>
+                </div>
+            </div>
+        </main>
+        <footer class="text-center mt-8 text-sm text-gray-500">
+            <p>&copy; 2025 京都表具協同組合 All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const imageUpload = document.getElementById('imageUpload');
+        const preview = document.getElementById('preview');
+        const dropzoneText = document.getElementById('dropzone-text');
+        const promptInput = document.getElementById('prompt');
+        const generateBtn = document.getElementById('generateBtn');
+        const loading = document.getElementById('loading');
+        const resultImage = document.getElementById('resultImage');
+        const errorMessage = document.getElementById('error-message');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const saveBtn = document.getElementById('saveBtn');
+        const brightnessBtns = document.querySelectorAll('.brightness-btn');
+
+        let uploadedImageBase64 = '';
+        let selectedBrightness = 'normal';
+
+        // --- Event Listeners ---
+        dropzone.addEventListener('click', () => imageUpload.click());
+        imageUpload.addEventListener('change', handleFile);
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.add('bg-gray-100'), false);
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.remove('bg-gray-100'), false);
+        });
+
+        dropzone.addEventListener('drop', handleDrop, false);
+
+        promptInput.addEventListener('input', () => {
+            generateBtn.disabled = !(promptInput.value.trim() && uploadedImageBase64);
+        });
+        
+        brightnessBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedBrightness = btn.dataset.brightness;
+                brightnessBtns.forEach(b => b.classList.remove('bg-blue-100', 'border-blue-400', 'text-blue-700', 'font-semibold'));
+                btn.classList.add('bg-blue-100', 'border-blue-400', 'text-blue-700', 'font-semibold');
+            });
+        });
+
+        generateBtn.addEventListener('click', generateImage);
+        saveBtn.addEventListener('click', saveImage);
+
+
+        // --- Functions ---
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            handleFile({ target: { files: [file] } });
+        }
+
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                uploadedImageBase64 = event.target.result.split(',')[1];
+                preview.src = event.target.result;
+                preview.classList.remove('hidden');
+                dropzoneText.classList.add('hidden');
+                step2.classList.remove('opacity-50', 'pointer-events-none');
+                generateBtn.disabled = !promptInput.value.trim();
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        async function generateImage() {
+            // Reset UI
+            step3.classList.remove('hidden');
+            loading.classList.remove('hidden');
+            resultImage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            saveBtn.classList.add('hidden');
+            generateBtn.disabled = true;
+            generateBtn.textContent = '生成中...';
+            
+            let fullPrompt = promptInput.value.trim();
+            if (selectedBrightness === 'dark') {
+                fullPrompt += "薄暗い、落ち着いた雰囲気、影を強調";
+            } else if (selectedBrightness === 'light') {
+                fullPrompt += "明るい、自然光が差し込む、鮮やか";
+            }
+            
+            try {
+                // Call our Netlify Function instead of Google API directly
+                const response = await fetch('/.netlify/functions/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: fullPrompt,
+                        image: uploadedImageBase64
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `サーバーエラーが発生しました: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.base64) {
+                    const imageUrl = `data:image/png;base64,${data.base64}`;
+                    resultImage.src = imageUrl;
+                    resultImage.classList.remove('hidden');
+                    saveBtn.classList.remove('hidden');
+                } else {
+                    throw new Error('画像データがありません。');
+                }
+
+            } catch (error) {
+                console.error("Error generating image:", error);
+                errorMessage.textContent = `エラー: ${error.message}`;
+                errorMessage.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
+                generateBtn.disabled = false;
+                generateBtn.textContent = '画像を生成する';
+            }
+        }
+        
+        function saveImage() {
+            const link = document.createElement('a');
+            link.href = resultImage.src;
+            link.download = 'ai-visual-harmony-result.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>
+
