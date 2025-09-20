@@ -9,3 +9,7 @@
   # Netlify Functionsのコードが置かれているディレクトリを指定します。
   directory = "netlify/functions/"
 
+# すべての関数のタイムアウト時間を30秒に設定します。
+[functions."*"]
+  timeout = 30
+
