@@ -1,0 +1,11 @@
+# このファイルはNetlifyのビルド設定と関数の場所を定義します。
+[build]
+  # このプロジェクトはビルドコマンドを必要としない静的サイトです。
+  command = ""
+  # 公開するディレクトリはルートディレクトリです。
+  publish = "/"
+
+[functions]
+  # Netlify Functionsのコードが置かれているディレクトリを指定します。
+  directory = "netlify/functions/"
+
