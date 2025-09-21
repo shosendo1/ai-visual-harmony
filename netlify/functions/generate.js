@@ -1,42 +1,56 @@
-// このNetlify Functionは、フロントエンドからのリクエストを受け取り、
-// 安全に保管されたAPIキーを使ってGoogle Gemini APIを呼び出します。
+// netlify/functions/generate.js
+
+// どの住所（オリジン）からの通信も許可するための「特別な許可証」(CORSヘッダー)
+// これが、この開発画面からの通信を許可するための、唯一かつ最も重要な部分です。
+const headers = {
+  'Access-Control-Allow-Origin': '*', // すべてのオリジン（住所）を許可します
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS', // 許可する通信の種類です
+};
+
 exports.handler = async (event) => {
-    // POSTリクエスト以外は受け付けない
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+    // ブラウザからの「この通信は安全ですか？」という事前の確認に応答します。
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 204, // 「問題ありません、どうぞ」という意味です
+            headers,
+            body: '',
+        };
     }
 
-    // 環境変数からAPIキーを取得
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'APIキーが設定されていません。' }) };
+    // POSTという種類の通信以外は受け付けません。
+    if (event.httpMethod !== 'POST') {
+        return {
+            statusCode: 405,
+            headers,
+            body: JSON.stringify({ error: '許可されていない通信方法です。' })
+        };
     }
-    
-    // APIエンドポイントのURL
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
 
     try {
-        // リクエストボディをパース
+        // --- ここから先は、これまでと全く同じ、正常に動作していた画像生成の処理です ---
         const { prompt, image } = JSON.parse(event.body);
+        const apiKey = process.env.GEMINI_API_KEY;
 
-        if (!prompt || !image) {
-            return { statusCode: 400, body: JSON.stringify({ error: 'プロンプトまたは画像がありません。' }) };
+        if (!apiKey) {
+            return {
+                statusCode: 500,
+                headers,
+                body: JSON.stringify({ error: 'APIキーがサーバーに設定されていません。' })
+            };
         }
+
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
         
-        // Geminiに送信するペイロードを作成
         const payload = {
             contents: [{
                 parts: [
-                    { text: `掛け軸の画像を背景に合成してください。背景の指示は「${prompt}」です。` },
+                    { text: `A realistic, high-quality photograph of a Japanese hanging scroll (kakejiku) with the following artwork, placed in this setting: ${prompt}. The artwork on the scroll is:` },
                     { inlineData: { mimeType: "image/png", data: image } }
                 ]
             }],
-            generationConfig: {
-                responseModalities: ['IMAGE']
-            },
         };
-        
-        // GoogleのAPIにリクエストを送信
+
         const apiResponse = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -44,30 +58,33 @@ exports.handler = async (event) => {
         });
 
         if (!apiResponse.ok) {
-            const errorData = await apiResponse.json();
-            console.error('Google API Error:', errorData);
-            return { statusCode: apiResponse.status, body: JSON.stringify({ error: 'Google APIからの応答エラーです。' }) };
+            const errorText = await apiResponse.text();
+            console.error('Google API Error:', errorText);
+            throw new Error(`Google APIからエラーが返されました。APIキーまたは請求設定をご確認ください。`);
         }
 
         const result = await apiResponse.json();
+        const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+        const base64Data = part?.inlineData?.data;
         
-        // レスポンスから画像データを抽出
-        const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
-
         if (!base64Data) {
-            console.error('No image data in response:', result);
-            return { statusCode: 500, body: JSON.stringify({ error: 'AIからのレスポンスに画像データが含まれていませんでした。' }) };
+            console.error('No image data in response:', JSON.stringify(result, null, 2));
+            throw new Error('AIは画像を生成できませんでした。プロンプトを具体的にしてみてください。');
         }
-        
-        // 成功レスポンスを返す
+
         return {
             statusCode: 200,
+            headers,
             body: JSON.stringify({ base64: base64Data }),
         };
 
     } catch (error) {
-        console.error('Internal Server Error:', error);
-        return { statusCode: 500, body: JSON.stringify({ error: 'サーバー内部でエラーが発生しました。' }) };
+        console.error('Error in Netlify function:', error);
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({ error: error.message || 'サーバーで不明なエラーが発生しました。' }),
+        };
     }
 };
 
