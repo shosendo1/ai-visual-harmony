@@ -443,7 +443,14 @@
                     });
                     if (!response.ok) {
                         let errorText = `サーバーエラー: ${response.status}`;
-                        try { errorText = (await response.json()).error || errorText; } catch (e) {}
+                        try { 
+                            const errorData = await response.json();
+                             if (errorData.error && errorData.error.includes("API key not valid")) {
+                                errorText = "Google APIで認証エラーが発生しました。<br>お手数ですが、以下の2点をご確認ください。<br>1. Netlifyの管理画面に設定したAPIキーが正しいか。<br>2. APIキーに紐付くGoogle Cloudプロジェクトの請求設定が有効になっているか。";
+                            } else {
+                                errorText = errorData.error || errorText;
+                            }
+                        } catch (e) {}
                         throw new Error(errorText);
                     }
                     const data = await response.json();
@@ -454,7 +461,7 @@
                     } else { throw new Error('画像データが返されませんでした。'); }
                 } catch (error) {
                     console.error("VH Error:", error);
-                    errorMessage.textContent = `エラー: ${error.message}`;
+                    errorMessage.innerHTML = `エラー:<br>${error.message}`;
                     errorMessage.classList.remove('hidden');
                 } finally {
                     loading.classList.add('hidden');
@@ -576,6 +583,9 @@
 
                     if (!response.ok) {
                          const errorData = await response.json().catch(() => ({error: 'サーバーエラーが発生しました。'}));
+                        if (errorData.error && errorData.error.includes("API key not valid")) {
+                            throw new Error("Google APIで認証エラーが発生しました。<br>お手数ですが、以下の2点をご確認ください。<br>1. Netlifyの管理画面に設定したAPIキーが正しいか。<br>2. APIキーに紐付くGoogle Cloudプロジェクトの請求設定が有効になっているか。");
+                        }
                         throw new Error(errorData.error);
                     }
 
@@ -593,12 +603,12 @@
 
                 } catch (error) {
                     console.error("Background removal error:", error);
-                    statusMessage.textContent = `エラー: ${error.message}`;
+                    statusMessage.innerHTML = `エラー:<br>${error.message}`;
                     statusMessage.classList.add('text-red-500');
                 } finally {
                     removeBgBtn.disabled = false;
                     removeBgBtn.innerHTML = originalButtonContent;
-                    setTimeout(() => { statusMessage.textContent = ''; }, 5000);
+                    setTimeout(() => { statusMessage.textContent = ''; }, 7000);
                 }
             });
             
