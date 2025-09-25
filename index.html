@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIビジュアルハーモニー ver.4.6</title>
+    <title>掛け軸ビジュアルハーモニー ver.6.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +19,13 @@
         }
         .btn-primary:hover { background-color: #2563EB; }
         .btn-primary:disabled { background-color: #93C5FD; cursor: not-allowed; }
+        .btn-secondary {
+            background-color: #DC2626; /* 赤色 */
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn-secondary:hover { background-color: #B91C1C; } /* 濃い赤色 */
+
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3B82F6;
@@ -32,7 +38,7 @@
             100% { transform: rotate(360deg); }
         }
         .step-icon { background-color: #3B82F6; }
-        .brightness-btn.selected, .preset-btn.selected, .effect-btn.selected, .placement-btn.selected, .angle-btn.selected {
+        .brightness-btn.selected, .preset-btn.selected, .effect-btn.selected, .placement-btn.selected, .angle-btn.selected, .enhancement-btn.selected, .season-btn.selected {
             background-color: #DBEAFE;
             border-color: #60A5FA;
             color: #1E40AF;
@@ -42,12 +48,25 @@
         #dropzone > * {
             pointer-events: none;
         }
+        #result-container {
+            position: relative;
+            overflow: hidden; /* This is crucial for the zoom effect */
+        }
+        #resultImage {
+            transition: transform 0.2s ease-out;
+            cursor: grab;
+        }
+         #resultImage.grabbing {
+            cursor: grabbing;
+        }
     </style>
 </head>
 <body class="text-gray-800">
     <div class="container mx-auto px-4 py-6 sm:px-6 md:px-8 max-w-4xl">
         <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-700">AIビジュアルハーモニー ver.4.6</h1>
+            <!-- ロゴ画像：お客様のウェブサイトからロゴを反映しました -->
+            <img src="https://shosendo.com/wp-content/uploads/2021/10/logo_shosendo.png" alt="京表具 尚仙堂 ロゴ" class="mx-auto h-20 w-auto mb-4">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-700">掛け軸ビジュアルハーモニー ver.6.2</h1>
             <p class="mt-2 text-gray-600">あなたの掛け軸はお客様のもとでも映えていますか？ 確かめてみましょう</p>
         </header>
 
@@ -113,6 +132,14 @@
                                 <button data-prompt="唐紙の壁" class="preset-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">唐紙</button>
                              </div>
                         </div>
+                         <div>
+                             <p class="text-sm text-gray-600 mb-2 font-semibold">光の演出で選ぶ:</p>
+                             <div class="flex flex-wrap gap-2">
+                                <button data-prompt="窓からの柔らかい自然光が差し込む" class="preset-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">窓からの自然光</button>
+                                <button data-prompt="モダンな間接照明で照らされた" class="preset-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">間接照明</button>
+                                <button data-prompt="スポットライトが作品を照らす" class="preset-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">スポットライト</button>
+                             </div>
+                        </div>
                     </div>
 
                     <div class="mt-6 space-y-4">
@@ -125,11 +152,11 @@
                         </div>
 
                         <div>
-                            <p class="text-sm text-gray-600 mb-2 font-semibold">画角の調整:</p>
+                            <p class="text-sm text-gray-600 mb-2 font-semibold">ズームと画角:</p>
                             <div class="grid grid-cols-3 gap-2">
                                  <button data-angle="wide" class="angle-btn flex-1 p-2 text-sm border rounded-lg transition">広角</button>
                                  <button data-angle="normal" class="angle-btn flex-1 p-2 text-sm border rounded-lg transition selected">標準</button>
-                                 <button data-angle="focus" class="angle-btn flex-1 p-2 text-sm border rounded-lg transition">フォーカス</button>
+                                 <button data-angle="zoom" class="angle-btn flex-1 p-2 text-sm border rounded-lg transition">ズーム</button>
                             </div>
                         </div>
 
@@ -151,14 +178,58 @@
                 <div class="step-icon text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0 mb-4 md:mb-0">3</div>
                 <div class="w-full">
                     <h2 class="text-xl font-bold text-gray-700">生成結果</h2>
-                    <div id="result-container" class="mt-4 min-h-[200px] bg-gray-100 rounded-lg flex items-center justify-center p-4">
+                    <div id="result-container" class="mt-4 min-h-[200px] bg-gray-100 rounded-lg flex items-center justify-center p-4 relative">
                         <div id="loading" class="text-center hidden">
                             <div class="loader mx-auto"></div>
                             <p class="mt-4 text-gray-600">AIが最高の背景を考えています...<br>しばらくお待ちください。</p>
                         </div>
                         <img id="resultImage" class="hidden max-w-full max-h-96 rounded-md">
                         <p id="error-message" class="text-red-500 hidden"></p>
+                        
+                        <!-- Zoom Controls -->
+                        <div id="zoom-controls" class="absolute top-2 right-2 flex-col space-y-1 hidden">
+                            <button id="zoom-in-btn" class="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition">+</button>
+                            <button id="zoom-out-btn" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition">-</button>
+                            <button id="zoom-reset-btn" class="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center hover:bg-gray-700 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
+                    
+                    <div id="enhancement-controls" class="mt-6 hidden space-y-4">
+                         <div>
+                             <p class="text-sm text-gray-600 mb-2 font-semibold">季節感を追加 (任意):</p>
+                             <div class="flex flex-wrap gap-2">
+                                <button data-season="spring" class="season-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">春</button>
+                                <button data-season="summer" class="season-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">夏</button>
+                                <button data-season="autumn" class="season-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">秋</button>
+                                <button data-season="winter" class="season-btn p-2 text-xs border rounded-full transition hover:bg-gray-100">冬</button>
+                             </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600 mb-2 font-semibold">アイテムを選択:</p>
+                            <!-- Japanese Style Enhancements -->
+                            <div id="japanese-enhancements" class="flex flex-wrap gap-2">
+                                 <button data-enhancement-value="ikebana" class="enhancement-btn p-2 text-xs border rounded-full transition">花</button>
+                                 <button data-enhancement-value="koro" class="enhancement-btn p-2 text-xs border rounded-full transition">香炉</button>
+                                 <button data-enhancement-value="okimono" class="enhancement-btn p-2 text-xs border rounded-full transition">置物</button>
+                            </div>
+                            <!-- Western Style Enhancements -->
+                            <div id="western-enhancements" class="hidden flex-wrap gap-2">
+                                 <button data-enhancement-value="sofa" class="enhancement-btn p-2 text-xs border rounded-full transition">ソファ</button>
+                                 <button data-enhancement-value="plant" class="enhancement-btn p-2 text-xs border rounded-full transition">観葉植物</button>
+                                 <button data-enhancement-value="side_table" class="enhancement-btn p-2 text-xs border rounded-full transition">サイドテーブル</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                             <button id="apply-enhancements-btn" class="btn-secondary flex-1 font-bold py-2 px-4 rounded-lg">空間演出を適用</button>
+                             <button id="enhancement-reset-btn" class="p-2 text-sm hover:bg-gray-100 rounded-full">リセット</button>
+                        </div>
+                    </div>
+
                      <button id="saveBtn" class="w-full btn-primary font-bold py-3 px-4 rounded-lg mt-6 transition transform hover:scale-105 hidden">画像を保存する</button>
                 </div>
             </div>
@@ -169,6 +240,79 @@
     </div>
 
     <script>
+        // All script remains the same until the end of the file...
+        const zoomControls = document.getElementById('zoom-controls');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
+        const zoomResetBtn = document.getElementById('zoom-reset-btn');
+
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let start = { x: 0, y: 0 };
+        
+        function setTransform() {
+            resultImage.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+        }
+
+        zoomInBtn.addEventListener('click', () => {
+            scale *= 1.2;
+            setTransform();
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            scale /= 1.2;
+            setTransform();
+        });
+
+        zoomResetBtn.addEventListener('click', () => {
+            scale = 1;
+            pointX = 0;
+            pointY = 0;
+            setTransform();
+        });
+
+        resultImage.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            start = { x: e.clientX - pointX, y: e.clientY - pointY };
+            panning = true;
+            resultImage.classList.add('grabbing');
+        });
+
+        resultImage.addEventListener('mouseup', () => {
+            panning = false;
+            resultImage.classList.remove('grabbing');
+        });
+        
+        resultImage.addEventListener('mouseleave', () => {
+            panning = false;
+             resultImage.classList.remove('grabbing');
+        });
+
+        resultImage.addEventListener('mousemove', (e) => {
+            e.preventDefault();
+            if (!panning) {
+                return;
+            }
+            pointX = (e.clientX - start.x);
+            pointY = (e.clientY - start.y);
+            setTransform();
+        });
+
+        resultImage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const xs = (e.clientX - pointX) / scale;
+            const ys = (e.clientY - pointY) / scale;
+            const delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+            (delta > 0) ? (scale *= 1.2) : (scale /= 1.2);
+            pointX = e.clientX - xs * scale;
+            pointY = e.clientY - ys * scale;
+            setTransform();
+        });
+
+
+        // ... All other javascript code from previous version ...
         const dropzone = document.getElementById('dropzone');
         const imageUpload = document.getElementById('imageUpload');
         const preview = document.getElementById('preview');
@@ -176,7 +320,7 @@
         const promptInput = document.getElementById('prompt');
         const generateBtn = document.getElementById('generateBtn');
         const loading = document.getElementById('loading');
-        const resultImage = document.getElementById('resultImage');
+        // resultImage is already defined for zoom
         const errorMessage = document.getElementById('error-message');
         const step2 = document.getElementById('step2');
         const step3 = document.getElementById('step3');
@@ -187,104 +331,112 @@
         const placementSelection = document.getElementById('placement-selection');
         const placementBtns = document.querySelectorAll('.placement-btn');
         const angleBtns = document.querySelectorAll('.angle-btn');
+        const enhancementControls = document.getElementById('enhancement-controls');
+        const japaneseEnhancements = document.getElementById('japanese-enhancements');
+        const westernEnhancements = document.getElementById('western-enhancements');
+        const enhancementBtns = document.querySelectorAll('.enhancement-btn');
+        const enhancementResetBtn = document.getElementById('enhancement-reset-btn');
+        const applyEnhancementsBtn = document.getElementById('apply-enhancements-btn');
+        const seasonBtns = document.querySelectorAll('.season-btn');
 
         let uploadedImageBase64 = '';
+        let initialGeneratedBackgroundBase64 = '';
+        let currentImageBase64 = '';
         let selectedBrightness = 'normal';
         let selectedPlacement = 'tokonoma';
         let selectedAngle = 'normal';
+        let selectedSeason = null;
 
         // --- Event Listeners ---
         dropzone.addEventListener('click', () => imageUpload.click());
         imageUpload.addEventListener('change', handleFile);
-
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropzone.addEventListener(eventName, preventDefaults, false);
-        });
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropzone.addEventListener(eventName, () => dropzone.classList.add('bg-gray-100'), false);
-        });
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropzone.addEventListener(eventName, () => dropzone.classList.remove('bg-gray-100'), false);
-        });
-
-        dropzone.addEventListener('drop', handleDrop, false);
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => dropzone.addEventListener(e, preventDefaults));
+        ['dragenter', 'dragover'].forEach(e => dropzone.addEventListener(e, () => dropzone.classList.add('bg-gray-100')));
+        ['dragleave', 'drop'].forEach(e => dropzone.addEventListener(e, () => dropzone.classList.remove('bg-gray-100')));
+        dropzone.addEventListener('drop', handleDrop);
 
         promptInput.addEventListener('input', updatePromptFromText);
         
-        placementBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedPlacement = btn.dataset.placement;
-                placementBtns.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-            });
-        });
+        placementBtns.forEach(btn => btn.addEventListener('click', () => handleSingleSelection(placementBtns, btn, val => selectedPlacement = val, 'placement')));
+        angleBtns.forEach(btn => btn.addEventListener('click', () => handleSingleSelection(angleBtns, btn, val => selectedAngle = val, 'angle')));
+        brightnessBtns.forEach(btn => btn.addEventListener('click', () => handleSingleSelection(brightnessBtns, btn, val => selectedBrightness = val, 'brightness')));
         
-        angleBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedAngle = btn.dataset.angle;
-                angleBtns.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
+        presetBtns.forEach(btn => btn.addEventListener('click', () => handleMultiSelection(btn)));
+        effectBtns.forEach(btn => btn.addEventListener('click', () => handleMultiSelection(btn)));
+        enhancementBtns.forEach(btn => btn.addEventListener('click', () => btn.classList.toggle('selected')));
+        
+        seasonBtns.forEach(btn => {
+             btn.addEventListener('click', () => {
+                const season = btn.dataset.season;
+                if (btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    selectedSeason = null;
+                } else {
+                    seasonBtns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSeason = season;
+                }
             });
         });
 
-        presetBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('selected');
-                updatePromptFromButtons();
-            });
-        });
-
-        effectBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('selected');
-                updatePromptFromButtons();
-            });
-        });
-
-        brightnessBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                selectedBrightness = btn.dataset.brightness;
-                brightnessBtns.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-            });
+        applyEnhancementsBtn.addEventListener('click', enhanceImage);
+        
+        enhancementResetBtn.addEventListener('click', () => {
+            resultImage.src = `data:image/png;base64,${initialGeneratedBackgroundBase64}`;
+            currentImageBase64 = initialGeneratedBackgroundBase64;
+            enhancementBtns.forEach(b => b.classList.remove('selected'));
+            seasonBtns.forEach(b => b.classList.remove('selected'));
+            selectedSeason = null;
         });
 
         generateBtn.addEventListener('click', generateImage);
         saveBtn.addEventListener('click', saveImage);
 
-
         // --- Functions ---
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        function handleDrop(e) { handleFile({ target: { files: e.dataTransfer.files } }); }
+        
+        function handleSingleSelection(buttons, clickedBtn, stateUpdater, datasetKey) {
+            stateUpdater(clickedBtn.dataset[datasetKey]);
+            buttons.forEach(b => b.classList.remove('selected'));
+            clickedBtn.classList.add('selected');
         }
 
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const file = dt.files[0];
-            handleFile({ target: { files: [file] } });
+        function handleMultiSelection(clickedBtn) {
+            clickedBtn.classList.toggle('selected');
+            updatePromptFromButtons();
         }
-        
+
         function updatePromptFromButtons() {
             const selectedPrompts = [];
-             document.querySelectorAll('.preset-btn.selected, .effect-btn.selected').forEach(b => {
+            document.querySelectorAll('.preset-btn.selected, .effect-btn.selected').forEach(b => {
                 selectedPrompts.push(b.dataset.prompt);
             });
             promptInput.value = selectedPrompts.join(', ');
+            updateEnhancementUI();
             updateGenerateBtnState();
         }
 
         function updatePromptFromText() {
             const textPrompts = new Set(promptInput.value.split(',').map(p => p.trim()).filter(Boolean));
-            
             document.querySelectorAll('.preset-btn, .effect-btn').forEach(btn => {
-                if (textPrompts.has(btn.dataset.prompt)) {
-                    btn.classList.add('selected');
-                } else {
-                    btn.classList.remove('selected');
-                }
+                btn.classList.toggle('selected', textPrompts.has(btn.dataset.prompt));
             });
+            updateEnhancementUI();
             updateGenerateBtnState();
+        }
+
+        function updateEnhancementUI() {
+            const promptValue = promptInput.value.toLowerCase();
+            const isWestern = ['リビング', 'ホテル', '北欧'].some(term => promptValue.includes(term));
+            
+            if (isWestern) {
+                japaneseEnhancements.classList.add('hidden');
+                westernEnhancements.classList.remove('hidden');
+            } else {
+                japaneseEnhancements.classList.remove('hidden');
+                westernEnhancements.classList.add('hidden');
+            }
         }
 
         function updateGenerateBtnState() {
@@ -294,7 +446,6 @@
         function handleFile(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = (event) => {
                 uploadedImageBase64 = event.target.result.split(',')[1];
@@ -308,35 +459,41 @@
             reader.readAsDataURL(file);
         }
         
+        async function callApi(prompt, imageBase64) {
+            const response = await fetch('https://ai-visual-harmony.netlify.app/.netlify/functions/generate', {
+                method: 'POST', mode: 'cors', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt, image: imageBase64 })
+            });
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `サーバーエラー: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.base64) return data.base64;
+            throw new Error('画像データが返されませんでした。');
+        }
+
         async function generateImage() {
-            // Reset UI
             step3.classList.remove('hidden');
             loading.classList.remove('hidden');
             resultImage.classList.add('hidden');
             errorMessage.classList.add('hidden');
             saveBtn.classList.add('hidden');
+            enhancementControls.classList.add('hidden');
+            zoomControls.classList.add('hidden');
             generateBtn.disabled = true;
             generateBtn.textContent = '生成中...';
             
             let userStyle = promptInput.value.trim();
-
             const absoluteRule = "【最重要・絶対厳守】これは、これから作品を飾るための、完全に『空っぽの背景』の画像です。この画像には、アート作品（掛け軸、額、絵画、屏風、ポスターなど）や、視線を奪うような主要な装飾品（花瓶、家具など）を一切含んではいけません。これはシミュレーション用の、何もない無人の背景です。";
-            
-            let primarySubject = "";
-            if (selectedPlacement === 'tokonoma') {
-                primarySubject = "掛け軸を飾るための、がらんどうの『床の間』だけの建築写真。";
-            } else { // hekimen
-                primarySubject = "掛け軸を飾るための、何もない『壁』だけの建築写真。";
-            }
-
+            let primarySubject = (selectedPlacement === 'tokonoma') ? "掛け軸を飾るための、がらんどうの『床の間』だけの建築写真。" : "掛け軸を飾るための、何もない『壁』だけの建築写真。";
             const styleContext = `その壁や床の質感、素材、光の当たり方は、「${userStyle}」というスタイルを反映してください。ただし、そのスタイルに関連するオブジェクトは一切追加しないでください。`;
-
             let finalPrompt = `${primarySubject} ${styleContext} ${absoluteRule}`;
             
             if (selectedAngle === 'wide') {
                 finalPrompt += " 広角レンズでの撮影、ワイドショット。";
-            } else if (selectedAngle === 'focus') {
-                finalPrompt += " クローズアップショット、背景をぼかす、被写界深度。";
+            } else if (selectedAngle === 'zoom') {
+                finalPrompt += " ズームイン、クローズアップショット。";
             }
 
             if (selectedBrightness === 'dark') {
@@ -346,38 +503,17 @@
             }
             
             try {
-                const response = await fetch('https://ai-visual-harmony.netlify.app/.netlify/functions/generate', {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        prompt: finalPrompt,
-                        image: uploadedImageBase64
-                    })
-                });
-
-                if (!response.ok) {
-                    let errorText = `サーバーエラーが発生しました: ${response.status}`;
-                    try {
-                        const errorData = await response.json();
-                        errorText = errorData.error || errorText;
-                    } catch (e) {
-                        errorText = 'サーバーとの通信に失敗しました。時間をおいて再度お試しください。';
-                    }
-                    throw new Error(errorText);
-                }
-
-                const data = await response.json();
-                
-                if (data.base64) {
-                    const imageUrl = `data:image/png;base64,${data.base64}`;
-                    resultImage.src = imageUrl;
-                    resultImage.classList.remove('hidden');
-                    saveBtn.classList.remove('hidden');
-                } else {
-                    throw new Error('画像データが返されませんでした。');
-                }
-
+                const resultBase64 = await callApi(finalPrompt, uploadedImageBase64);
+                initialGeneratedBackgroundBase64 = resultBase64; 
+                currentImageBase64 = resultBase64;
+                resultImage.src = `data:image/png;base64,${resultBase64}`;
+                resultImage.classList.remove('hidden');
+                saveBtn.classList.remove('hidden');
+                enhancementControls.classList.remove('hidden');
+                zoomControls.classList.remove('hidden');
+                updateEnhancementUI();
+                 // Reset zoom on new image
+                scale = 1; pointX = 0; pointY = 0; setTransform();
             } catch (error) {
                 console.error("Error generating image:", error);
                 errorMessage.textContent = `エラー: ${error.message}`;
@@ -388,10 +524,59 @@
                 generateBtn.textContent = '画像を生成する';
             }
         }
+
+        async function enhanceImage() {
+            if (!initialGeneratedBackgroundBase64) return;
+            
+            const selectedItems = [];
+            document.querySelectorAll('.enhancement-btn.selected').forEach(b => {
+                selectedItems.push(b.dataset.enhancementValue);
+            });
+
+            if(selectedItems.length === 0) {
+                enhancementResetBtn.click();
+                return;
+            }
+
+            loading.classList.remove('hidden');
+            enhancementBtns.forEach(b => b.disabled = true);
+            applyEnhancementsBtn.disabled = true;
+            enhancementResetBtn.disabled = true;
+            errorMessage.classList.add('hidden');
+            
+            const seasonMap = { spring: '春', summer: '夏', autumn: '秋', winter: '冬'};
+            const enhancementMap = {
+                ikebana: '生け花', koro: '香炉', okimono: '置物',
+                sofa: 'ソファ', plant: '観葉植物', side_table: 'サイドテーブル'
+            };
+
+            const enhancementTexts = selectedItems.map(val => enhancementMap[val] || '').join('と');
+            const seasonText = selectedSeason ? `${seasonMap[selectedSeason]}らしい雰囲気の` : '';
+            
+            const enhancementPrompt = `この空間の画像に、全体の雰囲気に調和するように、${seasonText}美しい「${enhancementTexts}」を自然な位置に追加してください。最重要ルール：掛け軸が主役です。追加するオブジェクトは掛け軸を隠さないように、控えめに、空間の隅や手前に配置してください。`;
+
+            try {
+                const resultBase64 = await callApi(enhancementPrompt, initialGeneratedBackgroundBase64);
+                currentImageBase64 = resultBase64;
+                resultImage.src = `data:image/png;base64,${resultBase64}`;
+                 // Reset zoom on new image
+                scale = 1; pointX = 0; pointY = 0; setTransform();
+            } catch (error) {
+                console.error("Error enhancing image:", error);
+                errorMessage.textContent = `エラー: ${error.message}`;
+                errorMessage.classList.remove('hidden');
+                resultImage.src = `data:image/png;base64,${initialGeneratedBackgroundBase64}`;
+            } finally {
+                loading.classList.add('hidden');
+                enhancementBtns.forEach(b => b.disabled = false);
+                applyEnhancementsBtn.disabled = false;
+                enhancementResetBtn.disabled = false;
+            }
+        }
         
         function saveImage() {
             const link = document.createElement('a');
-            link.href = resultImage.src;
+            link.href = `data:image/png;base64,${currentImageBase64}`;
             link.download = 'ai-visual-harmony-result.png';
             document.body.appendChild(link);
             link.click();
@@ -400,3 +585,4 @@
     </script>
 </body>
 </html>
+
